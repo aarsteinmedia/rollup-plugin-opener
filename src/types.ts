@@ -11,7 +11,7 @@ export interface RollupServeOptions {
    * Will not do anything if `open = false`.
    * Will use system default browser if not set.
    */
-  browser?: 'firefox' | 'chrome' | 'opera' | 'safari' | 'vivaldi' | 'edge' | 'brave'
+  browser?: 'firefox' | 'google chrome' | 'opera' | 'safari' | 'vivaldi' | 'edge' | 'brave'
 
   /**
    * Serve static files from the specified folder(s).

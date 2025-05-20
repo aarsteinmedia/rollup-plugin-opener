@@ -10,7 +10,7 @@ import {
 } from 'node:http'
 import { createServer as createHttpsServer } from 'node:https'
 import { resolve, posix } from 'node:path'
-import opener from 'opener'
+import open from 'open'
 
 import type { RollupServeOptions } from '@/types'
 
@@ -139,7 +139,7 @@ export default function serve(optionsFromProps: RollupServeOptions = { contentBa
   let isFirst = true
 
   return {
-    generateBundle() {
+    async generateBundle() {
       if (!isFirst) {
         return
       }
@@ -161,15 +161,11 @@ export default function serve(optionsFromProps: RollupServeOptions = { contentBa
       }
 
       // Open browser
-      if (options.open && options.openPage) {
-        if (/https?:\/\/.+/.test(options.openPage)) {
-          opener(options.openPage)
-        } else {
-          opener(url + options.openPage)
-        }
-        if (options.browser) {
-          opener(options.browser)
-        }
+      if (options.open) {
+        const path = /https?:\/\/.+/.test(options.openPage as string) ? `${options.openPage}` : `${url}${options.openPage}`,
+          args = options.browser ? { app: { name: options.browser } } : undefined
+
+        await open(path, args)
       }
     },
     name: 'serve'
@@ -192,12 +188,13 @@ function readFileFromContentBase(
       readFileFromContentBase(
         contentBase.slice(1), urlPath, callback
       )
-    } else {
-      // We know enough
-      callback(
-        error, content, filePath
-      )
+
+      return
     }
+    // We know enough
+    callback(
+      error, content, filePath
+    )
   })
 }
 

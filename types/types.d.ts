@@ -4,7 +4,7 @@ interface TypeMap {
     [key: string]: string[];
 }
 export interface RollupServeOptions {
-    browser?: 'firefox' | 'chrome' | 'opera' | 'safari' | 'vivaldi' | 'edge' | 'brave';
+    browser?: 'firefox' | 'google chrome' | 'opera' | 'safari' | 'vivaldi' | 'edge' | 'brave';
     contentBase?: string | string[];
     headers?: IncomingHttpHeaders | OutgoingHttpHeaders | {
         [name: string]: number | string | readonly string[];

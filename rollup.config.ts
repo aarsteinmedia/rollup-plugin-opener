@@ -20,7 +20,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url)),
     'mime/lite',
     'mime/types/other.js',
     'mime/types/standard.js',
-    'opener'
+    'open'
   ],
   types: RollupOptions = {
     external,

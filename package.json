@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-opener",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Serve rollup bundle and open in browser",
   "type": "module",
   "main": "dist/index.js",
@@ -14,8 +14,9 @@
     "prebuild:types": "rimraf ./types ",
     "build:types": "tsc -p ./tsconfig.build.json && tsc-alias",
     "prod": "pnpm build:types && pnpm build",
-    "dev": "rollup -c --configPlugin typescript -w --environment NODE_ENV:development",
-    "lint": "eslint"
+    "dev": "rollup -cw --configPlugin typescript --environment NODE_ENV:development",
+    "lint": "eslint",
+    "test": "cd test && rollup -cw || cd .."
   },
   "keywords": [
     "rollup",
@@ -39,15 +40,15 @@
   ],
   "dependencies": {
     "mime": "^4.0.7",
-    "opener": "^1.5.2"
+    "open": "^10.1.2"
   },
   "devDependencies": {
-    "@rollup/plugin-buble": "^1.0.0",
+    "@rollup/plugin-buble": "^1.0.3",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.2",
     "@swc/core": "^1.11.24",
-    "@types/node": "^22.0.0",
+    "@types/node": "^22.15.19",
     "@types/opener": "^1.4.3",
     "eslint": "^9.27.0",
     "eslint-config-sheriff": "^27.1.0",

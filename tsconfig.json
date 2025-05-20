@@ -46,7 +46,8 @@
   "include": [
     "src/**/*",
     "eslint.config.ts",
-    "rollup.config.ts"
+    "rollup.config.ts",
+    "test/**/*.ts"
   ],
   "exclude": [
     "**/node_modules",
