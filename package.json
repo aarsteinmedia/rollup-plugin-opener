@@ -1,0 +1,69 @@
+{
+  "name": "rollup-plugin-opener",
+  "version": "0.1.0",
+  "description": "Serve rollup bundle and open in browser",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "import": "./dist/index.js"
+  },
+  "scripts": {
+    "prebuild": "rimraf ./dist",
+    "build": "rollup -c --configPlugin typescript",
+    "prebuild:types": "rimraf ./types ",
+    "build:types": "tsc -p ./tsconfig.build.json && tsc-alias",
+    "prod": "pnpm build:types && pnpm build",
+    "dev": "rollup -c --configPlugin typescript -w --environment NODE_ENV:development",
+    "lint": "eslint"
+  },
+  "keywords": [
+    "rollup",
+    "rollup-plugin",
+    "serve",
+    "dev-server",
+    "static"
+  ],
+  "license": "MIT",
+  "author": "Johan Aarstein <johan@aarstein.media>",
+  "homepage": "https://github.com/aarsteinmedia/rollup-plugin-opener",
+  "bugs": {
+    "url": "https://github.com/aarsteinmedia/rollup-plugin-opener/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aarsteinmedia/rollup-plugin-opener"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "mime": "^4.0.7",
+    "opener": "^1.5.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-buble": "^1.0.0",
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "@swc/core": "^1.11.24",
+    "@types/node": "^22.0.0",
+    "@types/opener": "^1.4.3",
+    "eslint": "^9.27.0",
+    "eslint-config-sheriff": "^27.1.0",
+    "eslint-plugin-perfectionist": "^4.13.0",
+    "globals": "^16.1.0",
+    "jiti": "^2.4.2",
+    "lodash-es": "^4.17.21",
+    "prettier": "^3.5.3",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.41.0",
+    "rollup-plugin-dts": "^6.2.1",
+    "rollup-plugin-swc3": "^0.12.1",
+    "rollup-plugin-typescript-paths": "^1.5.0",
+    "tsc-alias": "^1.8.16",
+    "tslib": "^2.8.1",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1"
+  }
+}
