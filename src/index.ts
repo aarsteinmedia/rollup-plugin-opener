@@ -52,7 +52,7 @@ export default function serve(optionsFromProps: RollupServeOptions = { contentBa
     for (let i = 0; i < length; i++) {
       const header = options.headers?.[keys[i]]
 
-      if (!header) {
+      if (header === undefined) {
         continue
       }
       response.setHeader(keys[i], header)
