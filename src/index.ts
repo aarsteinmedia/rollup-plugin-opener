@@ -153,7 +153,7 @@ export default function serve(optionsFromProps: RollupServeOptions = { contentBa
         for (let i = 0; i < length; i++) {
           const base = options.contentBase?.[i]
 
-          if (!base) {
+          if (base === undefined) {
             continue
           }
           console.info(`${green(url)} -> ${resolve(base)}`)
