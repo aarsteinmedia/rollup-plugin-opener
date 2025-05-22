@@ -1,6 +1,6 @@
 # Serve rollup bundle and open in browser
 
-This is a fork of [rollup-plugin-serve](https://github.com/thgh/rollup-plugin-serve), made to address issues with typescript + option to choose which browser to open in.
+This is a fork of [rollup-plugin-serve](https://github.com/thgh/rollup-plugin-serve), made to address issues with typescript + option to choose which browser to open page in.
 
 ## Installation
 
@@ -37,6 +37,14 @@ serve('public')    // will be used as contentBase
 
 // Default options
 serve({
+
+   /**
+   * Choose which browser to open in.
+   * Will not do anything if `open = false`.
+   * Will use system default browser if not set.
+   */
+  browser: 'firefox',
+
   // Launch in browser (default: false)
   open: true,
 
@@ -111,8 +119,8 @@ This project aims to stay lean and close to standards. New features should encou
 To get it running:
 
 1. Clone the project.
-2. `npm install`
-3. `npm run build`
+2. `pnpm install`
+3. `pnpm build`
 
 ## Credits
 

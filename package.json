@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-opener",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Serve rollup bundle and open in browser",
   "type": "module",
   "main": "./dist/index.js",
@@ -48,8 +48,8 @@
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.2",
-    "@swc/core": "^1.11.24",
-    "@types/node": "^22.15.19",
+    "@swc/core": "^1.11.29",
+    "@types/node": "^22.15.21",
     "@types/opener": "^1.4.3",
     "eslint": "^9.27.0",
     "eslint-config-sheriff": "^27.1.0",
