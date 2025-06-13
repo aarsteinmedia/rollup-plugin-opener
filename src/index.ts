@@ -124,13 +124,19 @@ export default function serve(optionsFromProps: RollupServeOptions = { contentBa
   )
 
   // Assemble url for error and info messages
-  const url = `${options.https ? 'https' : 'http'}://${options.host || 'localhost'}:${options.port}`
+  const urlBase = `${options.https ? 'https' : 'http'}://${options.host || 'localhost'}`
+  let url = `${urlBase}:${options.port}`
 
   // Handle common server errors
   server.on('error', (e: NodeJS.ErrnoException) => {
     if (e.code === 'EADDRINUSE') {
-      console.error(`${url} is in use, either stop the other server or use a different port.`)
-      process.exit()
+      try {
+        options.port = Number(options.port) + 1
+        url = `${urlBase}:${options.port}`
+      } catch (error) {
+        console.error(`${url} is in use, either stop the other server or use a different port.`)
+        process.exit()
+      }
     } else {
       throw e
     }
