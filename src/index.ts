@@ -60,7 +60,7 @@ export default function serve(optionsFromProps: RollupServeOptions = { contentBa
 
     readFileFromContentBase(
       options.contentBase as string[], urlPath, (
-        error: null | NodeJS.ErrnoException, content: NonSharedBuffer, filePath: string
+        error: null | NodeJS.ErrnoException, content: Buffer, filePath: string
       ) => {
         if (!error) {
           found(
@@ -83,7 +83,7 @@ export default function serve(optionsFromProps: RollupServeOptions = { contentBa
 
           readFileFromContentBase(
             options.contentBase as string[], fallbackPath, (
-              err: unknown, baseContent: NonSharedBuffer, basFilePath: string
+              err: unknown, baseContent: Buffer, basFilePath: string
             ) => {
               if (err) {
                 notFound(response, basFilePath)
@@ -179,7 +179,7 @@ export default function serve(optionsFromProps: RollupServeOptions = { contentBa
 }
 
 function readFileFromContentBase(
-  contentBase: string[], urlPath: string, callback: (error: null | NodeJS.ErrnoException, content: NonSharedBuffer, filePath: string) => void
+  contentBase: string[], urlPath: string, callback: (error: null | NodeJS.ErrnoException, content: Buffer, filePath: string) => void
 ) {
   let filePath = resolve(contentBase[0] || '.', `.${  urlPath}`)
 
@@ -210,7 +210,7 @@ function notFound(response: ServerResponse, filePath: string) {
 }
 
 function found(
-  response: ServerResponse, mimeType: null | string, content: NonSharedBuffer
+  response: ServerResponse, mimeType: null | string, content: Buffer
 ) {
   response.writeHead(200, { 'Content-Type': mimeType || 'text/plain' })
   response.end(content, 'utf-8')
