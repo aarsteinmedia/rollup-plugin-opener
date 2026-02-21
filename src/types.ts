@@ -11,17 +11,18 @@ export interface RollupServeOptions {
    * Will not do anything if `open = false`.
    * Will use system default browser if not set.
    */
-  browser?: 'firefox' | 'google chrome' | 'opera' | 'safari' | 'vivaldi' | 'edge' | 'brave'
+  browser?: undefined | 'firefox' | 'google chrome' | 'opera' | 'safari' | 'vivaldi' | 'edge' | 'brave'
 
   /**
    * Serve static files from the specified folder(s).
    */
-  contentBase?: string | string[]
+  contentBase?: undefined | string | string[]
 
   /**
    * Set custom response headers.
    */
   headers?:
+    | undefined
     | IncomingHttpHeaders
     | OutgoingHttpHeaders
     | {
@@ -33,47 +34,47 @@ export interface RollupServeOptions {
    * Set to `true` to return index.html (200) instead of error page (404)
    * or path to fallback page.
    */
-  historyApiFallback?: boolean | string
+  historyApiFallback?: undefined | boolean | string
 
   /**
    * Change the host of the server (default: `'localhost'`).
    */
-  host?: string
+  host?: undefined | string
 
   /**
    * By default server will be served over HTTP (https: `false`). It can optionally be served over HTTPS.
    */
-  https?: ServerOptions | false
+  https?: undefined |  ServerOptions | false
 
   /**
    * Set custom mime types, usage https://github.com/broofa/mime#mimedefinetypemap-force--false.
    */
-  mimeTypes?: TypeMap
+  mimeTypes?: undefined | TypeMap
 
   /**
    * Execute function after server has begun listening.
    */
-  onListening?: (server: Server) => void
+  onListening?: undefined |  ((server: Server) => void)
 
   /**
    * Launch the browser after the first bundle is generated (default: `false`).
    */
-  open?: boolean
+  open?: undefined | boolean
 
   /**
    * Change the page that is opened when the browser is launched.
    * Will not do anything if `open = false`.
    * Remember to start with a slash, e.g. `'/different/page'`.
    */
-  openPage?: string
+  openPage?: undefined | string
 
   /**
    * Change the port that the server will listen on (default: `10001`).
    */
-  port?: number | string
+  port?: undefined | number | string
 
   /**
    * Show server address in console (default: `true`).
    */
-  verbose?: boolean
+  verbose?: undefined | boolean
 }

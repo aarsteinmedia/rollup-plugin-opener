@@ -16,7 +16,7 @@ import type { RollupServeOptions } from '@/types'
 
 let server: Server | undefined
 
-export default function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }) {
+export function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }) {
   let options = optionsFromProps
   const mime = new Mime(standardTypes, otherTypes)
 

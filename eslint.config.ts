@@ -14,12 +14,11 @@ const sheriffOptions: SheriffSettings = {
   'playwright': false,
   'react': false,
   'remeda': false,
-  'storybook': true,
+  'storybook': false,
   'vitest': false
 }
 
 const config: ConfigArray = defineConfig(
-  // @ts-expect-error types not working correctly
   sheriff(sheriffOptions),
   {
     files: ['**/*.{ts,js}'],

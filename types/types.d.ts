@@ -4,19 +4,19 @@ interface TypeMap {
     [key: string]: string[];
 }
 export interface RollupServeOptions {
-    browser?: 'firefox' | 'google chrome' | 'opera' | 'safari' | 'vivaldi' | 'edge' | 'brave';
-    contentBase?: string | string[];
-    headers?: IncomingHttpHeaders | OutgoingHttpHeaders | {
+    browser?: undefined | 'firefox' | 'google chrome' | 'opera' | 'safari' | 'vivaldi' | 'edge' | 'brave';
+    contentBase?: undefined | string | string[];
+    headers?: undefined | IncomingHttpHeaders | OutgoingHttpHeaders | {
         [name: string]: number | string | readonly string[];
     };
-    historyApiFallback?: boolean | string;
-    host?: string;
-    https?: ServerOptions | false;
-    mimeTypes?: TypeMap;
-    onListening?: (server: Server) => void;
-    open?: boolean;
-    openPage?: string;
-    port?: number | string;
-    verbose?: boolean;
+    historyApiFallback?: undefined | boolean | string;
+    host?: undefined | string;
+    https?: undefined | ServerOptions | false;
+    mimeTypes?: undefined | TypeMap;
+    onListening?: undefined | ((server: Server) => void);
+    open?: undefined | boolean;
+    openPage?: undefined | string;
+    port?: undefined | number | string;
+    verbose?: undefined | boolean;
 }
 export {};
