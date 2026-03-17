@@ -40,7 +40,7 @@ export function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }
     }
 
     // Remove querystring
-    const unsafePath = decodeURI(request.url.split('?')[0]),
+    const unsafePath = decodeURI(request.url.split('?')[0] ?? ''),
 
       /**
        * Don't allow path traversal.
@@ -50,12 +50,12 @@ export function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }
       { length } = keys
 
     for (let i = 0; i < length; i++) {
-      const header = options.headers?.[keys[i]]
+      const header = options.headers?.[keys[i] as string]
 
       if (header === undefined) {
         continue
       }
-      response.setHeader(keys[i], header)
+      response.setHeader(keys[i] as string, header)
     }
 
     readFileFromContentBase(
@@ -241,6 +241,12 @@ function closeServerOnTermination() {
   }
 
   for (let i = 0; i < 4; i++) {
-    closeServer(terminationSignals[i])
+    const signal = terminationSignals[i]
+
+    if (!signal) {
+      continue
+    }
+
+    closeServer(signal)
   }
 }

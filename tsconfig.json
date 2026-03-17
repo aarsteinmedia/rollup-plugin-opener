@@ -10,23 +10,25 @@
     "emitDeclarationOnly": true,
     "esModuleInterop": true,
     "composite": false,
-    "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "experimentalDecorators": false,
     "lib": [
       "DOM",
       "DOM.Iterable",
       "ES2023"
     ],
-    "module": "ESNext",
+    "module": "preserve",
     "moduleResolution": "Bundler",
-    "noFallthroughCasesInSwitch": true,
+    "noEmit": false,
+    "allowImportingTsExtensions": false,
     "noImplicitAny": true,
     "noImplicitOverride": true,
-    "noImplicitReturns": true,
     "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "allowJs": false,
+    "checkJs": false,
+    "experimentalDecorators": false,
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
     "outDir": "dist",
     "plugins": [
       {
@@ -38,8 +40,14 @@
     "strict": true,
     "target": "ES2023",
     "useDefineForClassFields": true,
-    "exactOptionalPropertyTypes": true,
     "verbatimModuleSyntax": true,
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "exactOptionalPropertyTypes": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "paths": {
       "@/*": [
         "./src/*"
@@ -51,6 +59,6 @@
   ],
   "exclude": [
     "**/node_modules",
-    "**/dist"
+    "**/dist",
   ]
 }
