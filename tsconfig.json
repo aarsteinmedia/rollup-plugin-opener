@@ -17,7 +17,8 @@
       "ES2023"
     ],
     "types": [
-      "node"
+      "node",
+      "opener"
     ],
     "module": "preserve",
     "moduleResolution": "Bundler",
