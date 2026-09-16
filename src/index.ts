@@ -9,12 +9,64 @@ import {
   type ServerResponse,
 } from 'node:http'
 import { createServer as createHttpsServer } from 'node:https'
+import { networkInterfaces, type NetworkInterfaceInfo } from 'node:os'
 import { resolve, posix } from 'node:path'
 import open from 'open'
 
 import type { RollupServeOptions } from '@/types'
 
 let server: Server | undefined
+
+function getLocalIP() {
+  const interfaces = Object.entries(networkInterfaces()),
+    { length: iLen } = interfaces,
+    addresses: NetworkInterfaceInfo[] = []
+
+  for (let i = 0; i < iLen; ++i) {
+    const [_, iface] = interfaces[i] as [name: string, iface: NetworkInterfaceInfo[]],
+      { length: jLen } = iface
+
+    for (let j = 0; j < jLen; ++j) {
+      const address = iface[j]
+
+      if (address?.family !== 'IPv4' || address.internal) {
+        continue
+      }
+
+      addresses.push(address)
+    }
+  }
+
+  return addresses[0]
+}
+
+// Assemble url for error and info messages
+function getAddress(host: string, options: RollupServeOptions) {
+  const protocol = `${options.https ? 'https' : 'http'}://`,
+    urlBase = `${protocol}${host}`
+
+  let url = `${urlBase}:${options.port}`
+
+  server?.on('error', (e: NodeJS.ErrnoException) => {
+    if (e.code !== 'EADDRINUSE') {
+      throw e
+    }
+
+    try {
+      options.port = Number(options.port) + 1
+      url = `${urlBase}:${options.port}`
+    } catch (error) {
+      if (process.env.NODE_ENV === 'development') {
+        console.error(error)
+      }
+
+      console.error(`${url} is in use, either stop the other server or use a different port.`)
+      process.exit()
+    }
+  })
+
+  return url
+}
 
 export function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }) {
   let options = optionsFromProps
@@ -72,8 +124,8 @@ export function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }
         if (error.code !== 'ENOENT') {
           response.writeHead(500)
           response.end('500 Internal Server Error' +
-            `\n\n${  filePath
-            }\n\n${  Object.values(error).join('\n')
+            `\n\n${ filePath
+            }\n\n${ Object.values(error).join('\n')
             }\n\n(rollup-plugin-opener)`, 'utf-8')
 
           return
@@ -123,24 +175,9 @@ export function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }
     }
   )
 
-  // Assemble url for error and info messages
-  const urlBase = `${options.https ? 'https' : 'http'}://${options.host || 'localhost'}`
-  let url = `${urlBase}:${options.port}`
-
-  // Handle common server errors
-  server.on('error', (e: NodeJS.ErrnoException) => {
-    if (e.code === 'EADDRINUSE') {
-      try {
-        options.port = Number(options.port) + 1
-        url = `${urlBase}:${options.port}`
-      } catch (error) {
-        console.error(`${url} is in use, either stop the other server or use a different port.`)
-        process.exit()
-      }
-    } else {
-      throw e
-    }
-  })
+  const url = getAddress(options.host || 'localhost', options),
+    ip = getLocalIP()?.address,
+    networkUrl = ip ? getAddress(ip, options) : null
 
   let isFirst = true
 
@@ -150,6 +187,10 @@ export function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }
         return
       }
       isFirst = false
+
+      console.info(`${teal('Rollup Opener [[VERSION]]')}
+- Local:    ${url}
+- Network:  ${networkUrl ?? 'Not set'}`)
 
       // Log which url to visit
       if (options.verbose !== false) {
@@ -162,7 +203,8 @@ export function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }
           if (base === undefined) {
             continue
           }
-          console.info(`${green(url)} -> ${resolve(base)}`)
+
+          console.info(`${green('✓')} Serving  ${resolve(base)}`)
         }
       }
 
@@ -181,7 +223,7 @@ export function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }
 function readFileFromContentBase(
   contentBase: string[], urlPath: string, callback: (error: null | NodeJS.ErrnoException, content: Buffer, filePath: string) => void
 ) {
-  let filePath = resolve(contentBase[0] || '.', `.${  urlPath}`)
+  let filePath = resolve(contentBase[0] || '.', `.${ urlPath}`)
 
   // Load index.html in directories
   if (urlPath.endsWith('/')) {
@@ -218,6 +260,10 @@ function found(
 
 function green(text: string) {
   return `\u001b[1m\u001b[32m${text}\u001b[39m\u001b[22m`
+}
+
+function teal(text: string) {
+  return `\u001b[1m\u001b[38;2;0;170;160m${text}\u001b[39m\u001b[22m`
 }
 
 function closeServerOnTermination() {

@@ -2,6 +2,7 @@ import type { RollupOptions } from 'rollup'
 
 import commonjs from '@rollup/plugin-commonjs'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
+import replace from '@rollup/plugin-replace'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -17,6 +18,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url)),
     'node:http',
     'node:https',
     'node:path',
+    'node:os',
     'mime/lite',
     'mime/types/other.js',
     'mime/types/standard.js',
@@ -55,8 +57,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url)),
         preferBuiltins: true,
       }),
       commonjs(),
+      replace({
+        '[[VERSION]]': pkg.version,
+        preventAssignment: true
+      }),
       swc()
     ]
   }
 
-export default [plugin, types]
+const bundle = process.env.NODE_ENV === 'development' ? plugin : [plugin, types]
+
+export default bundle

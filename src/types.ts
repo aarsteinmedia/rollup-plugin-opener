@@ -3,7 +3,7 @@ import type {
 } from 'node:http'
 import type { ServerOptions } from 'node:https'
 
-interface TypeMap {[key: string]: string[]}
+interface TypeMap { [key: string]: string[] }
 
 export interface RollupServeOptions {
   /**
@@ -44,7 +44,7 @@ export interface RollupServeOptions {
   /**
    * By default server will be served over HTTP (https: `false`). It can optionally be served over HTTPS.
    */
-  https?: undefined |  ServerOptions | false
+  https?: undefined | ServerOptions | false
 
   /**
    * Set custom mime types, usage https://github.com/broofa/mime#mimedefinetypemap-force--false.
@@ -54,7 +54,7 @@ export interface RollupServeOptions {
   /**
    * Execute function after server has begun listening.
    */
-  onListening?: undefined |  ((server: Server) => void)
+  onListening?: undefined | ((server: Server) => void)
 
   /**
    * Launch the browser after the first bundle is generated (default: `false`).

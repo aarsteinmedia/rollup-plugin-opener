@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-restricted-imports, import/no-useless-path-segments
-import serve from '../dist/index.js'
+import { serve } from '../dist/index.js'
 
 const testOnListening = () => {
   const timeout = 3
