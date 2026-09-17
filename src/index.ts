@@ -188,9 +188,9 @@ export function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }
       }
       isFirst = false
 
-      console.info(`${teal('Rollup Opener [[VERSION]]')}
+      console.info(`\n${teal('Rollup Opener [[VERSION]]')}
 - Local:    ${url}
-- Network:  ${networkUrl ?? 'Not set'}`)
+- Network:  ${networkUrl ?? 'Not set'}\n`)
 
       // Log which url to visit
       if (options.verbose !== false) {
@@ -204,8 +204,9 @@ export function serve(optionsFromProps: RollupServeOptions = { contentBase: '' }
             continue
           }
 
-          console.info(`${green('✓')} Serving  ${resolve(base)}`)
+          console.info(`${green('✓')} Serving -> ${resolve(base)}`)
         }
+        console.info('') // <- Adds newline after last record.
       }
 
       // Open browser
